@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — Jumia Nigeria</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="toast" id="toast"></div>
+
+  <!-- HEADER -->
+  <header class="main-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">JUMIA<span class="logo-star">&#9733;</span></a>
+      <form class="search-form" role="search" onsubmit="return false;">
+        <span class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input type="search" class="search-input" placeholder="Search products, brands and categories" aria-label="Search products" />
+        <button type="submit" class="search-btn">Search</button>
+      </form>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Account</span>
+        </a>
+        <a href="cart.html" class="nav-item cart-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span>Cart (<span id="cartCount">0</span>)</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE -->
+  <main class="main-content" style="padding-bottom:0">
+    <div class="content-container">
+
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" id="bcCat">Category</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current" id="bcName">Product</span>
+      </nav>
+
+      <div class="product-page">
+        <!-- GALLERY -->
+        <div class="product-gallery">
+          <div class="gallery-main">
+            <span class="gallery-discount-tag" id="pdDiscount"></span>
+            <span class="gallery-main-emoji" id="pdEmoji"></span>
+          </div>
+          <div class="gallery-thumbs" id="galleryThumbs"></div>
+        </div>
+
+        <!-- INFO -->
+        <div class="product-info">
+          <span class="product-brand-tag" id="pdBrand"></span>
+          <h1 class="product-title" id="pdTitle">Loading...</h1>
+
+          <div class="product-rating-row">
+            <span class="stars" id="pdStars">★★★★☆</span>
+            <span class="rating-count" id="pdRating"></span>
+            <span class="rating-sep">|</span>
+            <span class="rating-sold" id="pdSold"></span>
+          </div>
+
+          <div class="price-block">
+            <span class="price-new" id="pdPriceNew"></span>
+            <div class="price-old-row">
+              <span class="price-old" id="pdPriceOld"></span>
+              <span class="price-save" id="pdSave"></span>
+            </div>
+          </div>
+
+          <div class="flash-bar">
+            <span class="flash-bar-icon">⚡</span>
+            <span class="flash-bar-label">Flash Sale ends in:</span>
+            <div class="flash-bar-timer">
+              <span class="flash-bar-unit" id="ftH">00</span>
+              <span class="flash-bar-sep">:</span>
+              <span class="flash-bar-unit" id="ftM">00</span>
+              <span class="flash-bar-sep">:</span>
+              <span class="flash-bar-unit" id="ftS">00</span>
+            </div>
+          </div>
+
+          <div class="stock-wrap">
+            <div class="stock-top">
+              <span class="stock-bar-lbl">Stock remaining</span>
+              <span class="stock-bar-txt" id="pdStockTxt"></span>
+            </div>
+            <div class="stock-bar-bg"><div class="stock-bar-fill" id="pdStockFill" style="width:20%"></div></div>
+          </div>
+
+          <div class="variant-section" id="colorsSection">
+            <span class="variant-lbl">Color</span>
+            <div class="variant-opts" id="colorOpts"></div>
+          </div>
+          <div class="variant-section" id="storageSection">
+            <span class="variant-lbl">Storage</span>
+            <div class="variant-opts" id="storageOpts"></div>
+          </div>
+
+          <div class="qty-row">
+            <span class="qty-lbl">Quantity</span>
+            <div class="qty-ctrl">
+              <button class="qty-btn" id="qtyMinus">&#8722;</button>
+              <span class="qty-num" id="qtyNum">1</span>
+              <button class="qty-btn" id="qtyPlus">&#43;</button>
+            </div>
+          </div>
+
+          <div class="cta-row">
+            <button class="btn-cart" id="btnCart">&#128722; ADD TO CART</button>
+            <button class="btn-wish" id="btnWish" title="Wishlist">&#9825;</button>
+          </div>
+
+          <div class="delivery-box">
+            <div class="del-row"><span class="del-icon"><i class="fa-solid fa-truck-fast"></i></span><div class="del-text"><strong>Delivery</strong><span>Order today — delivered in 2–4 business days</span></div></div>
+            <hr class="del-hr" />
+            <div class="del-row"><span class="del-icon"><i class="fa-solid fa-box-open"></i></span><div class="del-text"><strong>Easy Returns</strong><span>15-day return policy. No questions asked.</span></div></div>
+            <hr class="del-hr" />
+            <div class="del-row"><span class="del-icon"><i class="fa-solid fa-shield-halved"></i></span><div class="del-text"><strong>Secure Payment</strong><span>Pay with Visa, Mastercard, JumiaPay or bank transfer</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCT TABS -->
+      <div class="pd-tabs">
+        <div class="pd-tabs-nav">
+          <button class="pd-tab-btn active" data-tab="desc">Description</button>
+          <button class="pd-tab-btn" data-tab="specs">Specifications</button>
+          <button class="pd-tab-btn" data-tab="reviews">Reviews</button>
+        </div>
+        <div class="pd-tab-pane active" id="tab-desc"><div id="pdDesc"></div></div>
+        <div class="pd-tab-pane" id="tab-specs"><table class="spec-table"><tbody id="pdSpecs"></tbody></table></div>
+        <div class="pd-tab-pane" id="tab-reviews"><div id="pdReviews"></div></div>
+      </div>
+
+      <!-- RELATED -->
+      <section class="related-sec">
+        <h2 class="sec-title">You May Also Like</h2>
+        <div class="related-grid" id="relatedGrid"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-top-inner">
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-truck-fast"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>Free Delivery</strong>
+      <span>On eligible orders</span>
+    </div>
+  </div>
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-box-open"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>Easy Returns</strong>
+      <span>15-day return policy</span>
+    </div>
+  </div>
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-shield-halved"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>Secure Payment</strong>
+      <span>100% protected</span>
+    </div>
+  </div>
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-headset"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>24/7 Support</strong>
+      <span>Dedicated support</span>
+    </div>
+  </div>
+</div>
+</div>
+    <div class="footer-main">
+      <div class="footer-col">
+        <h4 class="footer-col-title">About Jumia Nigeria</h4>
+        <nav class="footer-links">
+          <a href="#">About Jumia</a>
+          <a href="#">Jumia Business</a>
+          <a href="#">Jumia Careers</a>
+          <a href="#">Jumia Affiliates</a>
+          <a href="#">Jumia Express</a>
+          <a href="#">Jumia Pay</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Press Room</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Help &amp; Support</h4>
+        <nav class="footer-links">
+          <a href="#">Report a Product</a>
+          <a href="#">Returns &amp; Refunds</a>
+          <a href="#">Track My Order</a>
+          <a href="#">Payment Methods</a>
+          <a href="#">Delivery Information</a>
+          <a href="#">FAQ</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms &amp; Conditions</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Make Money with Jumia</h4>
+        <nav class="footer-links">
+          <a href="#">Sell on Jumia</a>
+          <a href="#">Vendor Hub</a>
+          <a href="#">Jumia Logistics</a>
+          <a href="#">Become an Agent</a>
+          <a href="#">Jumia Force</a>
+          <a href="#">Bulk Purchase</a>
+          <a href="#">Request for Products</a>
+        </nav>
+        <h4 class="footer-col-title" style="margin-top:20px;">Follow Us</h4>
+        <div class="footer-social">
+          <a href="#" class="social-btn social-fb" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-btn social-tw" aria-label="Twitter">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+          <a href="#" class="social-btn social-ig" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="#" class="social-btn social-yt" aria-label="YouTube">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+          <a href="#" class="social-btn social-li" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Jumia App</h4>
+        <p class="footer-app-subtitle">Shop on the go with the Jumia app</p>
+        <div class="footer-apps">
+          <a href="#" class="app-btn">
+            <span class="app-btn-icon">&#63743;</span>
+            <div class="app-btn-text"><small>Download on the</small><strong>App Store</strong></div>
+          </a>
+          <a href="#" class="app-btn">
+            <span class="app-btn-icon">&#9654;</span>
+            <div class="app-btn-text"><small>Get it on</small><strong>Google Play</strong></div>
+          </a>
+        </div>
+        <h4 class="footer-col-title footer-payment-title">Payment Methods</h4>
+        <div class="payment-icons">
+          <span class="pay-badge">VISA</span>
+          <span class="pay-badge">MasterCard</span>
+          <span class="pay-badge">Verve</span>
+          <span class="pay-badge">JumiaPay</span>
+          <span class="pay-badge">Bank Transfer</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <span class="footer-logo-text">JUMIA<span class="star">&#9733;</span></span>
+        <p>&copy; 2026 Jumia Nigeria. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+<script>
+/* ===== PRODUCT DATA ===== */
+var PRODUCTS = {
+  'power-bank':{
+    id:'power-bank',
+    name:'Ace Elec 20000 MAh Ultra Slim Power Bank',
+    brand:'ACE ELEC',
+    category:'Electronics',
+    images:[
+      'images/ultraslim powerbank9.jpg',
+      'images/ultraslimpowerbank2.jpg',
+      'images/ultraslimpowerbank3.jpg',
+      'images/ultraslimpowerbank4.jpg'
+    ],
+    discount:'-6%',
+    priceNew:6907,
+    priceOld:7363,
+    rating:'4.3 (89 ratings)',
+    sold:'215 sold',
+    stock:198,
+    stockPct:15,
+    colors:['Black','White','Blue'],
+    storage:[],
+    desc:'<p style="font-size:.88rem;line-height:1.8;color:#555">The <strong>Ace Elec 20000mAh Ultra Slim Power Bank</strong> is your perfect travel companion. Dual USB output charges two devices simultaneously. Its ultra-slim 15mm profile fits any bag or pocket.</p><ul style="font-size:.85rem;line-height:2;color:#555;padding-left:20px;margin-top:10px"><li>20,000mAh high-capacity battery</li><li>Dual USB-A output (5V / 2.1A each)</li><li>USB-C + Micro-USB input</li><li>4-LED battery indicator</li><li>Over-charge &amp; short-circuit protection</li><li>Slim profile — only 15mm thick</li></ul>',
+    specs:[['Capacity','20,000 mAh'],['Output Ports','2× USB-A (5V/2.1A)'],['Input','Micro USB / USB-C'],['Thickness','15 mm'],['Weight','340 g'],['Colors','Black, White, Blue'],['Warranty','12 months']],
+    reviews:[{name:'Chukwuemeka O.',
+    date:'Jan 12, 2025',
+    stars:5,
+    text:'Really good power bank! Charged my phone 4 times from 0. Very slim and fits in my pocket easily.',
+    verified:true},
+    {
+      name:'Amaka B.',
+      date:'Dec 28, 2024',
+      stars:4,
+      text:'Good quality. Holds a lot of charge. Takes a while to fully recharge the bank itself though.',
+      verified:true},
+      {name:'Tunde F.',
+      date:'Nov 19, 2024',
+      stars:4,
+      text:'Solid product. LED indicator is helpful. Build quality feels premium for the price.',
+      verified:false}]},
+
+  'standing-fan':{
+    id:'standing-fan',
+    name:'SOLITEC 18-Inch Standing Fan with Remote Control',
+    brand:'SOLITEC',
+    category:'Appliances',
+    images:[
+      'images/standingfan2.jpg',
+      'images/solarfan2.jpg',
+      'images/Rechargablefan.jpg',
+      'images/standingfan2.jpg'
+    ],
+    discount:'-9%',
+    priceNew:19294,
+    priceOld:21223,
+    rating:'4.5 (213 ratings)',
+    sold:'521 sold',
+    stock:67,
+    stockPct:30,
+    colors:['White','Black'],
+    storage:[],
+    desc:'<p style="font-size:.88rem;line-height:1.8;color:#555">The <strong>SOLITEC 18-Inch Standing Fan</strong> delivers powerful, silent airflow for large rooms. The included remote lets you adjust speed and oscillation from your sofa. Features 5 speed settings and a 7.5-hour timer.</p><ul style="font-size:.85rem;line-height:2;color:#555;padding-left:20px;margin-top:10px"><li>18-inch blade diameter</li><li>Remote control included (15 m range)</li><li>5 speed settings + sleep mode</li><li>90° horizontal oscillation</li><li>7.5-hour programmable timer</li><li>Ultra-quiet ≤ 48 dB operation</li></ul>',
+    specs:[['Blade Size','18 inches'],['Speed Settings','5'],['Oscillation','90°'],['Timer','7.5 hours'],['Noise Level','≤ 48 dB'],['Power','60 W'],['Colors','White, Black'],['Warranty','12 months']],
+    reviews:[{name:'Ngozi A.',date:'Feb 3, 2025',stars:5,text:'Excellent fan! The remote is super convenient and the sleep mode is very quiet at night.',verified:true},{name:'Kehinde O.',date:'Jan 25, 2025',stars:5,text:'Very powerful. Cools down my sitting room quickly and is easy to assemble.',verified:true},{name:'Segun M.',date:'Dec 10, 2024',stars:4,text:'Good fan overall. The remote works well. Packaging was slightly damaged on delivery but the product itself is fine.',verified:true}]},
+
+  'solar-fan':{
+    id:'solar-fan',
+    name:'Rechargeable Solar Fan with 25W Panel & Power Bank',
+    brand:'SunBreeze',
+    category:'Electronics',
+    images:[
+      'images/Rechargablefan.jpg',
+      'images/standingfan2.jpg',
+      'images/solar fan.jpg',
+      'images/Rechargablefan.jpg'
+    ],
+    discount:'-40%',
+    priceNew:63000,
+    priceOld:104300,
+    rating:'4.0 (56 ratings)',
+    sold:'98 sold',
+    stock:28,
+    stockPct:8,
+    colors:['White'],
+    storage:[],
+    desc:'<p style="font-size:.88rem;line-height:1.8;color:#555">The ultimate off-grid cooling solution. The <strong>SunBreeze Rechargeable Solar Fan</strong> combines a 25W solar panel, 8000mAh battery, and a powerful DC fan. Perfect for NEPA outages.</p><ul style="font-size:.85rem;line-height:2;color:#555;padding-left:20px;margin-top:10px"><li>25W monocrystalline silicon solar panel</li><li>8000mAh lithium battery backup</li><li>3 fan speed settings</li><li>USB port to charge your phone</li><li>Solar + AC dual charging</li><li>Built-in LED lighting</li></ul>',
+    specs:[['Solar Panel','25W Monocrystalline'],['Battery','8000 mAh Lithium'],['Fan Speeds','3'],['Charging','Solar + AC'],['USB Output','5V / 1A'],['Runtime','Up to 12 hrs (low speed)'],['Warranty','6 months']],
+    reviews:[{name:'Ibrahim Y.',date:'Jan 8, 2025',stars:4,text:'Really useful product. The solar charging works brilliantly in Lagos sun. A lifesaver during NEPA cuts.',verified:true},{name:'Blessing C.',date:'Dec 15, 2024',stars:4,text:'Good product. Battery lasts long on low speed. The LED light is a nice bonus.',verified:false}]},
+
+  'nivea-lotion':{
+    id:'nivea-lotion',
+    name:'NIVEA Radiant & Beauty Body Lotion 400ml',
+    brand:'NIVEA',
+    category:'Health & Beauty',
+    images:[
+      'images/NIVEA1.jpg',
+      'images/Nivea2.jpg',
+      'images/Nivea3.jpg',
+      'images/Nivea2.jpg'
+    ],
+    discount:'-33%',
+    priceNew:7842,
+    priceOld:11635,
+    rating:'4.7 (412 ratings)',
+    sold:'1,204 sold',
+    stock:94,
+    stockPct:45,
+    colors:['400ml'],
+    storage:[],
+    desc:'<p style="font-size:.88rem;line-height:1.8;color:#555">NIVEA Radiant &amp; Beauty Body Lotion is enriched with SPF 15 and natural oils to moisturise and protect your skin. The lightweight formula absorbs quickly without leaving a greasy feel.</p><ul style="font-size:.85rem;line-height:2;color:#555;padding-left:20px;margin-top:10px"><li>SPF 15 sun protection</li><li>Enriched with Natural Oils &amp; Vitamin C</li><li>24-hour moisturisation</li><li>Quick-absorbing, non-greasy</li><li>Dermatologically tested</li><li>400 ml generous size</li></ul>',
+    specs:[['Volume','400 ml'],['SPF','SPF 15'],['Skin Type','All skin types'],['Key Ingredients','Natural Oils, Vitamin C'],['Scent','Fresh & Light'],['Dermatologist Tested','Yes'],['Origin','Germany']],
+    reviews:[{name:'Funke A.',date:'Feb 10, 2025',stars:5,text:'My skin has never felt this smooth! The scent is lovely and it lasts all day. I\'ve been buying this for years.',verified:true},{name:'Chioma N.',date:'Jan 20, 2025',stars:5,text:'Best lotion on Jumia! Very affordable. Absorbs fast and makes skin glow beautifully.',verified:true},{name:'Zainab K.',date:'Dec 5, 2024',stars:4,text:'Good product. Moisturises well. I just wish it had a pump dispenser.',verified:true}]},
+
+  'air-fryer':{
+    id:'air-fryer',
+    name:'SILVER CREST 8L Extra Large Digital Air Fryer 2400W',
+    brand:'SILVER CREST',
+    category:'Appliances',
+    images:[
+      'images/deepfry.jpg',
+      'images/deepfry2.jpg',
+      'images/deepfry.jpg',
+      'images/deepfry2.jpg'
+    ],
+    discount:'-18%',
+    priceNew:36000,
+    priceOld:44000,
+    rating:'4.6 (334 ratings)',
+    sold:'789 sold',
+    stock:100,
+    stockPct:60,
+    colors:['Black','White'],
+    storage:[],
+    desc:'<p style="font-size:.88rem;line-height:1.8;color:#555">Cook healthier meals with the <strong>SILVER CREST 8L Digital Air Fryer</strong>. With 2400W of power and 8-litre capacity, it is perfect for large families. Digital touchscreen gives precise control.</p><ul style="font-size:.85rem;line-height:2;color:#555;padding-left:20px;margin-top:10px"><li>8-litre extra-large capacity (feeds 6–8 people)</li><li>2400W powerful heating element</li><li>Temperature: 80°C – 200°C</li><li>Timer: up to 60 minutes</li><li>8 preset cooking programmes</li><li>Digital LED touchscreen</li><li>Dishwasher-safe basket</li></ul>',
+    specs:[['Capacity','8 litres'],['Power','2400 W'],['Temperature','80°C – 200°C'],['Timer','Up to 60 min'],['Presets','8 cooking modes'],['Display','Digital LED Touchscreen'],['Basket','Dishwasher safe'],['Warranty','12 months']],
+    reviews:[{name:'Adaeze P.',date:'Feb 14, 2025',stars:5,text:'Absolutely love this air fryer! The 8L is perfect for my family of 6. Chips come out crispy with barely any oil.',verified:true},{name:'Emeka O.',date:'Jan 30, 2025',stars:5,text:'Excellent quality and very easy to use. The digital controls are intuitive. Worth every naira!',verified:true},{name:'Fatima B.',date:'Dec 20, 2024',stars:4,text:'Great capacity and cooks evenly. Slightly noisy at max power but not a dealbreaker.',verified:true}]},
+
+  'infinix-phone':{
+    id:'infinix-phone',
+    name:'Infinix Hot 60i 6.78" 4GB RAM + 128GB Android 14',
+    brand:'Infinix',
+    category:'Phones & Tablets',
+    images:[
+      'images/phone image2.jpg',
+      'images/.jpg',
+      'images/.jpg',
+      'images/.jpg'
+    ],
+    discount:'-25%',
+    priceNew:158421,
+    priceOld:212442,
+    rating:'4.4 (276 ratings)',
+    sold:'634 sold',
+    stock:38,
+    stockPct:20,
+    colors:['Midnight Black','Glacier White','Solar Orange'],
+    storage:['128GB','256GB'],
+    desc:'<p style="font-size:.88rem;line-height:1.8;color:#555">The <strong>Infinix Hot 60i</strong> brings flagship features at a mid-range price. A massive 6.78" display, MediaTek Helio G91, and 50MP triple-camera. Running Android 14, it delivers the latest experience out of the box.</p><ul style="font-size:.85rem;line-height:2;color:#555;padding-left:20px;margin-top:10px"><li>6.78" FHD+ 90Hz IPS display</li><li>4GB RAM (expandable to 8GB via RAM Fusion)</li><li>128GB storage (microSD expandable)</li><li>50MP + 2MP + AI triple rear camera</li><li>16MP front selfie camera</li><li>5160mAh battery + 18W fast charging</li><li>Android 14 with XOS 14</li></ul>',
+    specs:[['Display','6.78" FHD+ IPS 90Hz'],['Processor','MediaTek Helio G91'],['RAM','4GB (up to 8GB)'],['Storage','128GB + microSD'],['Rear Camera','50MP + 2MP + AI'],['Front Camera','16MP'],['Battery','5160mAh, 18W fast charge'],['OS','Android 14, XOS 14'],['SIM','Dual Nano-SIM']],
+    reviews:[{name:'David K.',date:'Feb 20, 2025',stars:5,text:'Incredible value for money! The 90Hz display is buttery smooth and the cameras are great in daylight. Battery life is impressive.',verified:true},{name:'Adaobi M.',date:'Feb 5, 2025',stars:4,text:'Good phone overall. Performance is smooth for daily tasks. Low-light camera could be better but expected at this price.',verified:true},{name:'Yusuf I.',date:'Jan 18, 2025',stars:5,text:'Best budget phone I\'ve owned. The display is gorgeous and the build quality feels premium.',verified:true}]}
+};
+
+var ALL = Object.values(PRODUCTS);
+
+function fmt(n){return '₦\u00A0'+n.toLocaleString('en-NG');}
+
+/* ===== LOAD PRODUCT ===== */
+var pid  = (new URLSearchParams(location.search)).get('id')||'infinix-phone';
+var prod = PRODUCTS[pid]||PRODUCTS['infinix-phone'];
+
+document.title = prod.name+' — Jumia Nigeria';
+document.getElementById('bcCat').textContent  = prod.category;
+document.getElementById('bcName').textContent = prod.name.length>42?prod.name.substring(0,42)+'…':prod.name;
+
+document.getElementById('pdEmoji').innerHTML =
+'<img src="'+prod.images[0]+'" class="product-main-img">';
+
+document.getElementById('pdDiscount').textContent = prod.discount;
+/* thumbs */
+var tHtml='';
+for(var i=0;i<prod.images.length;i++)
+tHtml+='<div class="gallery-thumb'+(i===0?' active':'')+'"><img src="'+prod.images[i]+'" style="width:100%;height:100%;object-fit:contain;"></div>';
+document.getElementById('galleryThumbs').innerHTML=tHtml;
+document.querySelectorAll('.gallery-thumb').forEach(function(t,i){
+  t.addEventListener('click',function(){
+
+    document.querySelectorAll('.gallery-thumb')
+    .forEach(function(x){x.classList.remove('active');});
+
+    t.classList.add('active');
+
+    document.getElementById('pdEmoji').innerHTML =
+    '<img src="'+prod.images[i]+'" style="width:100%;height:100%;object-fit:contain;">';
+  });
+});
+
+document.getElementById('pdBrand').textContent    = prod.brand;
+document.getElementById('pdTitle').textContent    = prod.name;
+document.getElementById('pdRating').textContent   = prod.rating;
+document.getElementById('pdSold').textContent     = prod.sold;
+document.getElementById('pdPriceNew').textContent = fmt(prod.priceNew);
+document.getElementById('pdPriceOld').textContent = fmt(prod.priceOld);
+document.getElementById('pdSave').textContent     = 'Save '+fmt(prod.priceOld-prod.priceNew);
+document.getElementById('pdStockTxt').textContent = prod.stock+' items left';
+document.getElementById('pdStockFill').style.width= prod.stockPct+'%';
+
+/* star fill */
+var fullStars = Math.round(parseFloat(prod.rating));
+document.getElementById('pdStars').textContent = '★'.repeat(Math.min(fullStars,5))+'☆'.repeat(Math.max(0,5-fullStars));
+
+/* color variants */
+var colOpts=document.getElementById('colorOpts');
+if(prod.colors.length){
+  prod.colors.forEach(function(c,i){
+    var b=document.createElement('button');b.className='variant-btn'+(i===0?' active':'');b.textContent=c;
+    b.addEventListener('click',function(){document.querySelectorAll('#colorOpts .variant-btn').forEach(function(x){x.classList.remove('active');});b.classList.add('active');});
+    colOpts.appendChild(b);
+  });
+}else{document.getElementById('colorsSection').style.display='none';}
+
+/* storage variants */
+var stoOpts=document.getElementById('storageOpts');
+if(prod.storage&&prod.storage.length){
+  prod.storage.forEach(function(s,i){
+    var b=document.createElement('button');b.className='variant-btn'+(i===0?' active':'');b.textContent=s;
+    b.addEventListener('click',function(){document.querySelectorAll('#storageOpts .variant-btn').forEach(function(x){x.classList.remove('active');});b.classList.add('active');});
+    stoOpts.appendChild(b);
+  });
+}else{document.getElementById('storageSection').style.display='none';}
+
+/* description */
+document.getElementById('pdDesc').innerHTML=prod.desc;
+
+/* specs */
+var tbody=document.getElementById('pdSpecs');
+prod.specs.forEach(function(r){var tr=document.createElement('tr');tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td>';tbody.appendChild(tr);});
+
+/* reviews */
+var rDiv=document.getElementById('pdReviews');
+prod.reviews.forEach(function(r){
+  var s='★'.repeat(r.stars)+'☆'.repeat(5-r.stars);
+  rDiv.innerHTML+='<div class="review-card"><div class="review-top"><span class="review-name">'+r.name+'</span><span class="review-date">'+r.date+'</span></div><div class="review-stars">'+s+'</div><p class="review-body">'+r.text+'</p>'+(r.verified?'<p class="review-verified">✓ Verified Purchase</p>':'')+'</div>';
+});
+
+/* related */
+var relG=document.getElementById('relatedGrid');
+ALL.filter(function(p){return p.id!==pid;})
+.slice(0,4)
+.forEach(function(p){
+  var a=document.createElement('a');
+  a.href='product.html?id='+p.id;
+  a.className='related-card';
+
+  a.innerHTML=
+  '<div class="related-img">'+
+  '<span class="related-badge">'+p.discount+'</span>'+
+  '<img src="'+p.images[0]+'" class="related-product-img">'+
+  '</div>'+
+  '<div class="related-info">'+
+  '<p class="related-name">'+p.name+'</p>'+
+  '<p class="related-price-new">'+fmt(p.priceNew)+'</p>'+
+  '<p class="related-price-old">'+fmt(p.priceOld)+'</p>'+
+  '</div>';
+  relG.appendChild(a);
+});
+
+/* ===== QUANTITY ===== */
+var qty=1;
+document.getElementById('qtyMinus').addEventListener('click',function(){if(qty>1){qty--;document.getElementById('qtyNum').textContent=qty;}});
+document.getElementById('qtyPlus').addEventListener('click',function(){if(qty<prod.stock){qty++;document.getElementById('qtyNum').textContent=qty;}});
+
+/* ===== CART ===== */
+function getCart(){try{return JSON.parse(localStorage.getItem('jumia_cart')||'[]');}catch(e){return[];}}
+function saveCart(c){localStorage.setItem('jumia_cart',JSON.stringify(c));}
+function refreshCount(){var t=getCart().reduce(function(s,i){return s+i.qty;},0);document.getElementById('cartCount').textContent=t;}
+refreshCount();
+
+document.getElementById('btnCart').addEventListener('click',function(){
+  var cart=getCart();
+  var color=(document.querySelector('#colorOpts .variant-btn.active')||{}).textContent||'';
+  var stor=(document.querySelector('#storageOpts .variant-btn.active')||{}).textContent||'';
+  var ex=cart.find(function(i){return i.id===pid&&i.color===color&&i.storage===stor;});
+  if(ex){
+  ex.qty+=qty;
+}else{
+  cart.push({
+    id: pid,
+    name: prod.name,
+    images: prod.images,
+    price: prod.priceNew,
+    color: color,
+    storage: stor,
+    qty: qty
+  });
+}
+  saveCart(cart);refreshCount();
+  var btn=document.getElementById('btnCart');
+  btn.textContent='✓ Added to Cart!';btn.classList.add('added');
+  showToast('✓ '+qty+'× added to cart');
+  setTimeout(function(){btn.innerHTML='&#128722; ADD TO CART';btn.classList.remove('added');},2000);
+});
+
+document.getElementById('btnWish').addEventListener('click',function(){
+  this.classList.toggle('wished');
+  this.textContent=this.classList.contains('wished')?'♥':'♡';
+});
+
+/* ===== TABS ===== */
+document.querySelectorAll('.pd-tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.pd-tab-btn').forEach(function(b){b.classList.remove('active');});
+    document.querySelectorAll('.pd-tab-pane').forEach(function(p){p.classList.remove('active');});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ===== FLASH TIMER ===== */
+var secs=3652;
+function pad(n){return String(n).padStart(2,'0');}
+function tickT(){if(secs<=0)return;secs--;document.getElementById('ftH').textContent=pad(Math.floor(secs/3600));document.getElementById('ftM').textContent=pad(Math.floor((secs%3600)/60));document.getElementById('ftS').textContent=pad(secs%60);}
+document.getElementById('ftH').textContent=pad(Math.floor(secs/3600));
+document.getElementById('ftM').textContent=pad(Math.floor((secs%3600)/60));
+document.getElementById('ftS').textContent=pad(secs%60);
+setInterval(tickT,1000);
+
+/* ===== TOAST ===== */
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
+</script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Cart — Jumia Nigeria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="toast" id="toast"></div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="checkout-overlay" id="checkoutOverlay">
+    <div class="checkout-box">
+      <button class="checkout-close" id="checkoutClose">&#10005;</button>
+      <div id="checkoutContent">
+        <div class="checkout-form" id="checkoutFormWrap">
+          <h2>🛒 Complete Your Order</h2>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" id="ckName" placeholder="e.g. Chukwuemeka Obi" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" id="ckPhone" placeholder="+234 800 000 0000" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Delivery Address</label>
+            <input type="text" class="form-input" id="ckAddr" placeholder="House number, street, area" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input type="text" class="form-input" id="ckCity" placeholder="Lagos" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">State</label>
+              <input type="text" class="form-input" id="ckState" placeholder="Lagos State" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Method</label>
+            <select class="form-input" id="ckPayment">
+              <option>JumiaPay (Card / Bank Transfer)</option>
+              <option>Pay on Delivery</option>
+              <option>Visa / Mastercard</option>
+              <option>Bank Transfer</option>
+            </select>
+          </div>
+          <p style="font-size:.72rem;color:#aaa;line-height:1.5">Your order will be delivered in 2–4 business days. By placing this order you agree to Jumia's Terms & Conditions.</p>
+          <button class="checkout-place-btn" id="placeOrderBtn">PLACE ORDER &#8594;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="main-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">JUMIA<span class="logo-star">&#9733;</span></a>
+      <form class="search-form" role="search" onsubmit="return false;">
+        <span class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input type="search" class="search-input" placeholder="Search products, brands and categories" />
+        <button type="submit" class="search-btn">Search</button>
+      </form>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Account</span>
+        </a>
+        <a href="cart.html" class="nav-item cart-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span>Cart (<span id="cartCount">0</span>)</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE -->
+  <main class="main-content" style="padding-bottom:0">
+    <div class="content-container">
+
+      <!-- breadcrumb -->
+      <nav class="breadcrumb" style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:#888;padding:14px 0">
+        <a href="index.html" style="color:#888;transition:color .2s">Home</a>
+        <span style="color:#ccc">›</span>
+        <span style="color:#333;font-weight:500">My Cart</span>
+      </nav>
+
+      <div class="cart-page" id="cartPage">
+        <!-- filled by JS -->
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-top-inner">
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-truck-fast"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>Free Delivery</strong>
+      <span>On eligible orders</span>
+    </div>
+  </div>
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-box-open"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>Easy Returns</strong>
+      <span>15-day return policy</span>
+    </div>
+  </div>
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-shield-halved"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>Secure Payment</strong>
+      <span>100% protected</span>
+    </div>
+  </div>
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-headset"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>24/7 Support</strong>
+      <span>Dedicated support</span>
+    </div>
+  </div>
+</div>
+</div>
+    <div class="footer-main">
+      <div class="footer-col">
+        <h4 class="footer-col-title">About Jumia Nigeria</h4>
+        <nav class="footer-links">
+          <a href="#">About Jumia</a>
+          <a href="#">Jumia Business</a>
+          <a href="#">Jumia Careers</a>
+          <a href="#">Jumia Affiliates</a>
+          <a href="#">Jumia Express</a>
+          <a href="#">Jumia Pay</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Press Room</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Help &amp; Support</h4>
+        <nav class="footer-links">
+          <a href="#">Report a Product</a>
+          <a href="#">Returns &amp; Refunds</a>
+          <a href="#">Track My Order</a>
+          <a href="#">Payment Methods</a>
+          <a href="#">Delivery Information</a>
+          <a href="#">FAQ</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms &amp; Conditions</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Make Money with Jumia</h4>
+        <nav class="footer-links">
+          <a href="#">Sell on Jumia</a>
+          <a href="#">Vendor Hub</a>
+          <a href="#">Jumia Logistics</a>
+          <a href="#">Become an Agent</a>
+          <a href="#">Jumia Force</a>
+          <a href="#">Bulk Purchase</a>
+          <a href="#">Request for Products</a>
+        </nav>
+        <h4 class="footer-col-title" style="margin-top:20px;">Follow Us</h4>
+        <div class="footer-social">
+          <a href="#" class="social-btn social-fb" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-btn social-tw" aria-label="Twitter">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+          <a href="#" class="social-btn social-ig" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="#" class="social-btn social-yt" aria-label="YouTube">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+          <a href="#" class="social-btn social-li" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Jumia App</h4>
+        <p class="footer-app-subtitle">Shop on the go with the Jumia app</p>
+        <div class="footer-apps">
+          <a href="#" class="app-btn">
+            <span class="app-btn-icon">&#63743;</span>
+            <div class="app-btn-text"><small>Download on the</small><strong>App Store</strong></div>
+          </a>
+          <a href="#" class="app-btn">
+            <span class="app-btn-icon">&#9654;</span>
+            <div class="app-btn-text"><small>Get it on</small><strong>Google Play</strong></div>
+          </a>
+        </div>
+        <h4 class="footer-col-title footer-payment-title">Payment Methods</h4>
+        <div class="payment-icons">
+          <span class="pay-badge">VISA</span>
+          <span class="pay-badge">MasterCard</span>
+          <span class="pay-badge">Verve</span>
+          <span class="pay-badge">JumiaPay</span>
+          <span class="pay-badge">Bank Transfer</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <span class="footer-logo-text">JUMIA<span class="star">&#9733;</span></span>
+        <p>&copy; 2026 Jumia Nigeria. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+<script>
+function fmt(n){return '₦\u00A0'+n.toLocaleString('en-NG');}
+function getCart(){try{return JSON.parse(localStorage.getItem('jumia_cart')||'[]');}catch(e){return[];}}
+function saveCart(c){localStorage.setItem('jumia_cart',JSON.stringify(c));}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
+
+var DELIVERY = 1500;
+var PROMO_CODES = { 'JUMIA10': 0.10, 'SAVE20': 0.20, 'WELCOME': 0.05 };
+var appliedDiscount = 0;
+
+function renderCart(){
+  var cart=getCart();
+  var page=document.getElementById('cartPage');
+  document.getElementById('cartCount').textContent=cart.reduce(function(s,i){return s+i.qty;},0);
+
+  if(!cart.length){
+    page.innerHTML='<div class="empty-cart"><div class="empty-icon">🛒</div><h2 class="empty-title">Your cart is empty</h2><p class="empty-sub">Looks like you haven\'t added anything to your cart yet. Browse our amazing deals and find something you love!</p><a href="index.html" class="empty-cta">START SHOPPING</a></div>';
+    return;
+  }
+
+  var subtotal=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+  var originalTotal=cart.reduce(function(s,i){
+    /* try to estimate original price from product data; fallback to 1.1× */
+    return s+i.price*i.qty;
+  },0);
+  var discount=Math.round(subtotal*appliedDiscount);
+  var total=subtotal-discount+DELIVERY;
+
+  /* LEFT: item list */
+  var listHtml='<div class="cart-left"><div class="cart-header-bar"><h2 class="cart-title">My Cart <span class="cart-count-badge">'+cart.length+' item'+(cart.length>1?'s':'')+'</span></h2><button class="cart-clear-btn" id="clearCartBtn">🗑 Clear cart</button></div><div class="cart-items-list" id="cartItemsList">';
+
+  cart.forEach(function(item, idx){
+    var meta=[];
+    if(item.color) meta.push(item.color);
+    if(item.storage) meta.push(item.storage);
+    listHtml+='<div class="cart-item-card" data-idx="'+idx+'">'
+      +'<div class="cart-item-emoji"><img src="'+(item.images ? item.images[0] : item.emoji)+'" class="cart-product-img"></div>'
+      +'<div class="cart-item-body">'
+        +'<p class="cart-item-name">'+item.name+'</p>'
+        +(meta.length?'<p class="cart-item-meta">'+meta.join(' · ')+'</p>':'')
+        +'<p class="cart-item-price">'+fmt(item.price)+' <span class="cart-item-unit">each</span></p>'
+        +'<div class="cart-item-actions">'
+          +'<div class="qty-ctrl-sm">'
+            +'<button class="qty-btn-sm" data-action="minus" data-idx="'+idx+'">&#8722;</button>'
+            +'<span class="qty-num-sm">'+item.qty+'</span>'
+            +'<button class="qty-btn-sm" data-action="plus" data-idx="'+idx+'">&#43;</button>'
+          +'</div>'
+          +'<button class="cart-remove-btn" data-remove="'+idx+'">🗑 Remove</button>'
+          +'<span class="cart-item-subtotal">'+fmt(item.price*item.qty)+'</span>'
+        +'</div>'
+      +'</div>'
+    +'</div>';
+  });
+
+  listHtml+='</div></div>'; /* close cart-left */
+
+  /* RIGHT: summary */
+  listHtml+='<aside class="cart-summary">'
+    +'<p class="summary-title">Order Summary</p>'
+    +'<div class="summary-row"><span>Subtotal ('+cart.reduce(function(s,i){return s+i.qty;},0)+' items)</span><span class="val">'+fmt(subtotal)+'</span></div>'
+    +(appliedDiscount?'<div class="summary-row"><span>Promo discount ('+Math.round(appliedDiscount*100)+'%)</span><span class="val summary-discount">- '+fmt(discount)+'</span></div>':'')
+    +'<div class="summary-row"><span>Delivery fee</span><span class="val">'+fmt(DELIVERY)+'</span></div>'
+    +'<div class="summary-row total"><span>Total</span><span class="val">'+fmt(total)+'</span></div>'
+    +'<div class="summary-promo">'
+      +'<input type="text" class="promo-input" id="promoInput" placeholder="Enter promo code" />'
+      +'<button class="promo-apply" id="promoApply">Apply</button>'
+    +'</div>'
+    +'<button class="checkout-btn" id="checkoutBtn">PROCEED TO CHECKOUT &#8594;</button>'
+    +'<a href="index.html" class="continue-btn">&#8592; Continue Shopping</a>'
+    +'<div style="font-size:.72rem;color:#aaa;text-align:center">Secure checkout powered by</div>'
+    +'<div class="payment-badges-row"><span class="pay-badge-sm">VISA</span><span class="pay-badge-sm">MasterCard</span><span class="pay-badge-sm">JumiaPay</span><span class="pay-badge-sm">Verve</span><span class="pay-badge-sm">Bank Transfer</span></div>'
+  +'</aside>';
+
+  page.innerHTML=listHtml;
+
+  /* Quantity buttons */
+  document.querySelectorAll('.qty-btn-sm').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var c=getCart();
+      var i=parseInt(btn.dataset.idx);
+      if(btn.dataset.action==='plus'){c[i].qty++;}
+      else{if(c[i].qty>1)c[i].qty--;else{c.splice(i,1);}}
+      saveCart(c);renderCart();
+    });
+  });
+
+  /* Remove buttons */
+  document.querySelectorAll('.cart-remove-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var c=getCart();
+      var name=c[parseInt(btn.dataset.remove)].name.substring(0,25)+'…';
+      c.splice(parseInt(btn.dataset.remove),1);
+      saveCart(c);renderCart();
+      showToast('Removed: '+name);
+    });
+  });
+
+  /* Clear cart */
+  var clearBtn=document.getElementById('clearCartBtn');
+  if(clearBtn){clearBtn.addEventListener('click',function(){if(confirm('Remove all items from your cart?')){saveCart([]);appliedDiscount=0;renderCart();}});}
+
+  /* Promo code */
+  var promoApply=document.getElementById('promoApply');
+  if(promoApply){
+    promoApply.addEventListener('click',function(){
+      var code=(document.getElementById('promoInput').value||'').toUpperCase().trim();
+      if(PROMO_CODES[code]!==undefined){
+        appliedDiscount=PROMO_CODES[code];
+        renderCart();
+        showToast('✓ Promo code applied! '+Math.round(appliedDiscount*100)+'% off');
+      }else{
+        showToast('✗ Invalid promo code. Try: JUMIA10');
+      }
+    });
+  }
+
+  /* Checkout button */
+  var ckBtn=document.getElementById('checkoutBtn');
+  if(ckBtn){ckBtn.addEventListener('click',function(){
+    document.getElementById('checkoutOverlay').classList.add('active');
+    document.body.style.overflow='hidden';
+  });}
+}
+
+/* ===== CHECKOUT MODAL ===== */
+document.getElementById('checkoutClose').addEventListener('click',function(){
+  document.getElementById('checkoutOverlay').classList.remove('active');
+  document.body.style.overflow='';
+});
+document.getElementById('checkoutOverlay').addEventListener('click',function(e){
+  if(e.target===this){this.classList.remove('active');document.body.style.overflow='';}
+});
+
+document.getElementById('placeOrderBtn').addEventListener('click',function(){
+  var name=document.getElementById('ckName').value.trim();
+  var phone=document.getElementById('ckPhone').value.trim();
+  var addr=document.getElementById('ckAddr').value.trim();
+  var city=document.getElementById('ckCity').value.trim();
+  if(!name||!phone||!addr||!city){showToast('⚠ Please fill in all required fields');return;}
+
+  /* show success */
+  var orderNum='JM-'+Math.floor(Math.random()*900000+100000);
+  document.getElementById('checkoutContent').innerHTML=
+    '<div class="checkout-success">'
+    +'<div class="big-check">✅</div>'
+    +'<h2>Order Placed Successfully!</h2>'
+    +'<p>Thank you, <strong>'+name+'</strong>! Your order has been confirmed and will be delivered to <strong>'+city+'</strong> in 2–4 business days.</p>'
+    +'<div class="order-num">Order #'+orderNum+'</div>'
+    +'<p style="font-size:.75rem;color:#aaa;margin-top:4px">You will receive an SMS confirmation on '+phone+'</p>'
+    +'<button onclick="clearAndClose()" style="background:#f68b1e;color:#fff;font-size:.9rem;font-weight:700;padding:12px 28px;border-radius:10px;border:none;cursor:pointer;font-family:inherit;margin-top:8px;width:100%">CONTINUE SHOPPING</button>'
+    +'</div>';
+});
+
+function clearAndClose(){
+  saveCart([]);
+  appliedDiscount=0;
+  document.getElementById('checkoutOverlay').classList.remove('active');
+  document.body.style.overflow='';
+  renderCart();
+}
+
+/* INIT */
+renderCart();
+</script>
+</body>
+</html>

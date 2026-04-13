@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jumia Nigeria | Online Shopping for Electronics, Phones &amp; More</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== AUTH MODAL ===== -->
+  <div class="modal-overlay" id="authModal" role="dialog" aria-modal="true" aria-label="Sign in or Create Account">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" aria-label="Close">&#10005;</button>
+      <div class="modal-logo">JUMIA<span class="star">&#9733;</span></div>
+      <p class="modal-tagline">Africa's No.1 Shopping Destination</p>
+      <div class="modal-tabs">
+        <div class="modal-tab active" data-tab="login">Sign In</div>
+        <div class="modal-tab" data-tab="signup">Create Account</div>
+      </div>
+      <!-- LOGIN FORM -->
+      <div class="modal-form active" id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email" autocomplete="email" />
+          <span class="error-text" id="loginEmailError">Please enter a valid email address.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loginPw">Password</label>
+          <div class="password-wrap">
+            <input type="password" id="loginPw" class="form-input" placeholder="Enter your password" autocomplete="current-password" />
+            <span class="pw-toggle" data-target="loginPw">&#128065;</span>
+          </div>
+          <span class="error-text" id="loginPwError">Password cannot be empty.</span>
+        </div>
+        <a href="#" class="forgot-link">Forgot Password?</a>
+        <button class="form-submit" id="loginSubmit">SIGN IN</button>
+        <div class="form-divider">or continue with</div>
+        <div class="social-login-row">
+          <button class="social-login-btn">&#127760; Google</button>
+          <button class="social-login-btn">&#128242; Phone</button>
+        </div>
+        <p class="form-switch">Don't have an account? <a onclick="switchTab('signup')">Create one</a></p>
+      </div>
+      <!-- SIGNUP FORM -->
+      <div class="modal-form" id="signupForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="signupFirst">First Name</label>
+            <input type="text" id="signupFirst" class="form-input" placeholder="First name" autocomplete="given-name" />
+            <span class="error-text" id="signupFirstError">First name is required.</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="signupLast">Last Name</label>
+            <input type="text" id="signupLast" class="form-input" placeholder="Last name" autocomplete="family-name" />
+            <span class="error-text" id="signupLastError">Last name is required.</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="signupEmail">Email Address</label>
+          <input type="email" id="signupEmail" class="form-input" placeholder="Enter your email" autocomplete="email" />
+          <span class="error-text" id="signupEmailError">Please enter a valid email address.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="signupPhone">Phone Number</label>
+          <input type="tel" id="signupPhone" class="form-input" placeholder="+234 800 000 0000" autocomplete="tel" />
+          <span class="error-text" id="signupPhoneError">Please enter a valid phone number.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="signupPw">Password</label>
+          <div class="password-wrap">
+            <input type="password" id="signupPw" class="form-input" placeholder="Min. 8 characters" autocomplete="new-password" />
+            <span class="pw-toggle" data-target="signupPw">&#128065;</span>
+          </div>
+          <span class="form-hint">Must be at least 8 characters with a number.</span>
+          <span class="error-text" id="signupPwError">Password must be at least 8 characters.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="signupPwConfirm">Confirm Password</label>
+          <div class="password-wrap">
+            <input type="password" id="signupPwConfirm" class="form-input" placeholder="Re-enter password" autocomplete="new-password" />
+            <span class="pw-toggle" data-target="signupPwConfirm">&#128065;</span>
+          </div>
+          <span class="error-text" id="signupPwConfirmError">Passwords do not match.</span>
+        </div>
+        <p class="form-terms">
+          By creating an account you agree to our
+          <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a>.
+        </p>
+        <button class="form-submit" id="signupSubmit">CREATE ACCOUNT</button>
+        <p class="form-switch">Already have an account? <a onclick="switchTab('login')">Sign In</a></p>
+      </div>
+      <!-- SUCCESS MESSAGE -->
+      <div class="success-msg" id="successMsg">
+        <div class="check">&#10003;</div>
+        <h3 id="successTitle">Welcome to Jumia!</h3>
+        <p id="successText">You have signed in successfully. Happy shopping!</p>
+        <button class="form-submit" onclick="closeModal()">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCROLL TO TOP ===== -->
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Back to top">&#8679;</button>
+
+  <!-- ===== UTILITY BAR ===== -->
+  <div class="utility-bar">
+    <div class="utility-inner">
+      <a href="#" class="utility-sell">&#9733; Sell on Jumia</a>
+      <div class="utility-center">
+        <span class="utility-logo">JUMIA<span class="star">&#9733;</span></span>
+        <span class="utility-service">&#9733; PAY</span>
+        <span class="utility-service">&#9733; DELIVERY</span>
+      </div>
+      <nav class="utility-nav">
+        <a href="#" onclick="openModal('login'); return false;">Login</a>
+        <a href="#" onclick="openModal('signup'); return false;">Register</a>
+        <a href="#">Help</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ===== MAIN HEADER ===== -->
+  <header class="main-header">
+    <div class="header-inner">
+      <a href="#" class="logo">JUMIA<span class="logo-star">&#9733;</span></a>
+      <form class="search-form" role="search" onsubmit="return false;">
+        <span class="search-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <input type="search" class="search-input" placeholder="Search products, brands and categories" aria-label="Search" />
+        <button type="submit" class="search-btn">Search</button>
+      </form>
+      <nav class="header-nav">
+        <div class="nav-item" onclick="openModal('login')" role="button" tabindex="0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>Account
+            <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </span>
+        </div>
+        <a href="#" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span>Help
+            <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </span>
+        </a>
+        <a href="cart.html" class="nav-item cart-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span>Cart (<span id="cartCount">0</span>)</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content">
+    <div class="content-container">
+
+      <!-- HERO GRID -->
+      <section class="hero-grid">
+
+        <!-- LEFT: CATEGORY SIDEBAR -->
+        <aside class="category-sidebar">
+          <ul class="category-list">
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <span>Appliances</span>
+            </li>
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              <span>Phones &amp; Tablets</span>
+            </li>
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <span>Health &amp; Beauty</span>
+            </li>
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span>Home &amp; Office</span>
+            </li>
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <span>Electronics</span>
+            </li>
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
+              <span>Fashion</span>
+            </li>
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <span>Supermarket</span>
+            </li>
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              <span>Computing</span>
+            </li>
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+              <span>Baby Products</span>
+            </li>
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M17 12h.01"/><path d="M7 12h.01"/></svg>
+              <span>Gaming</span>
+            </li>
+            <li class="category-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              <span>Musical Instruments</span>
+            </li>
+            <li class="category-item category-more">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <span>Other Categories</span>
+            </li>
+          </ul>
+        </aside>
+
+        <!-- CENTER: HERO BANNER -->
+        <div class="hero-slider">
+          <div class="hero-track">
+            <!-- Slide 1 -->
+            <div class="hero-banner">
+              <img src="images/Artboard-1.gif" class="banner-bg" alt="Banner 1">
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="hero-banner">
+              <img src="images/Artboard2.jpg" class="banner-bg" alt="Banner 2">
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="hero-banner">
+              <img src="images/Artboard_3.jpg" class="banner-bg" alt="Banner 3">
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="hero-banner">
+              <img src="images/Artboard_4.jpg" class="banner-bg" alt="Banner 3">
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="hero-banner">
+              <img src="images/Artboard_5.jpg" class="banner-bg" alt="Banner 3">
+            </div>
+          </div>
+          <button class="banner-arrow-next" aria-label="Next slide">&#8250;</button>
+        </div>
+        <!-- RIGHT: PROMO STACK -->
+        <aside class="promo-stack">
+          <a href="#" class="promo-card">
+            <div class="promo-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f68b1e" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/>
+              </svg>
+            </div>
+            <div class="promo-text">
+              <strong>CALL TO ORDER</strong>
+              <span>0700-600-0000, 0201888...</span>
+            </div>
+          </a>
+          <a href="#" class="promo-card">
+            <div class="promo-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f68b1e" stroke-width="2">
+                <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/>
+              </svg>
+            </div>
+            <div class="promo-text">
+              <strong>Sell on Jumia</strong>
+            </div>
+          </a>
+          <a href="#" class="promo-card">
+            <div class="promo-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f68b1e" stroke-width="2">
+                <rect x="1" y="3" width="15" height="13" rx="2"/>
+                <path d="M16 8h4l3 3v5h-7V8z"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+            </div>
+            <div class="promo-text">
+              <strong>Send Your Packages</strong>
+            </div>
+          </a>
+          <a href="#" class="promo-card promo-card--force">
+            <div class="force-content">
+              <div class="force-title">JUMIA<span>&#9733;</span></div>
+              <div class="force-subtitle">FORCE</div>
+              <div class="force-cta">JOIN NOW</div>
+            </div>
+          </a>
+        </aside>
+
+      </section>
+
+      <!-- PROMO SCROLL SECTION -->
+      <section class="promo-scroll-section">
+        <div class="promo-scroll-track">
+          <article class="scroll-card">
+            <div class="scroll-card-img scroll-img-1"><div class="scroll-badge">Up to<br /><strong>-40%</strong></div></div>
+            <p class="scroll-card-caption">Up to 40% Off</p>
+          </article>
+          <article class="scroll-card">
+            <div class="scroll-card-img scroll-img-2"><div class="scroll-badge">CLEARANCE<br /><strong>SALES</strong></div></div>
+            <p class="scroll-card-caption">Up to 80% Off</p>
+          </article>
+          <article class="scroll-card">
+            <div class="scroll-card-img scroll-img-3"><div class="scroll-badge">JUMIA&#9733;<br />DELIVERY</div></div>
+            <p class="scroll-card-caption">Send Packages Securely</p>
+          </article>
+          <article class="scroll-card">
+            <div class="scroll-card-img scroll-img-4"><div class="scroll-badge">BUY 2<br />PAY FOR<br /><strong>ONE</strong></div></div>
+            <p class="scroll-card-caption">Unbeatable Offers</p>
+          </article>
+          <article class="scroll-card">
+            <div class="scroll-card-img scroll-img-5"><div class="scroll-badge scroll-badge--light">
+              <img src="images/kids&baby.jpeg">
+            </div></div>
+            <p class="scroll-card-caption">Kids, Baby &amp; More</p>
+          </article>
+          <article class="scroll-card">
+            <div class="scroll-card-img scroll-img-6"><div class="scroll-badge scroll-badge--orange2">XTRA<br /><strong>10%</strong><br />AT CHECKOUT</div></div>
+            <p class="scroll-card-caption">Unlock Your Deal</p>
+          </article>
+          <article class="scroll-card">
+            <div class="scroll-card-img scroll-img-7"><div class="scroll-badge scroll-badge--drinks">
+             <img src="images/groceries.jpeg">
+            </div></div>
+            <p class="scroll-card-caption">Groceries</p>
+          </article>
+          <article class="scroll-card">
+            <div class="scroll-card-img scroll-img-8"><div class="scroll-badge scroll-badge--awoof">Awoof<br />of the<br /><strong>Month</strong></div></div>
+            <p class="scroll-card-caption">Awoof Deals</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- FLASH SALES SECTION -->
+      <section class="flash-sales-section">
+        <div class="flash-sales-header">
+          <div class="flash-sales-left">
+            <span class="flash-icon">⚡</span>
+            <span class="flash-title">Flash Sales</span>
+          </div>
+          <div class="flash-timer">
+            <span class="flash-timer-label">Time Left:</span>
+            <div class="timer-display">
+              <span class="timer-unit" id="timerH">01</span>
+              <span class="timer-sep">h</span>
+              <span class="timer-unit" id="timerM">00</span>
+              <span class="timer-sep">m</span>
+              <span class="timer-unit" id="timerS">52</span>
+              <span class="timer-sep">s</span>
+            </div>
+          </div>
+          <a href="#" class="flash-see-all">See All &#8250;</a>
+        </div>
+        <div class="flash-products-track">
+          <a href="product.html?id=power-bank" class="flash-product">
+            <span class="discount-badge">-6%</span>
+            <span class="brand-badge">ACE ELEC</span>
+            <div class="product-img-wrap">
+              <img src="images/powerbank image 7.jpg">
+            </div>
+            <p class="product-name">Ace Elec 20000 MAh Ultra Slim Power Bank</p>
+            <p class="product-price-new">&#8358; 6,907</p>
+            <p class="product-price-old">&#8358; 7,363</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">198 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--critical" style="width:15%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=standing-fan" class="flash-product">
+            <span class="discount-badge">-9%</span>
+            <div class="product-img-wrap">
+              <img src="images/fan image.jpg">
+            </div>
+            <p class="product-name">SOLITEC STANDING FAN with Remote Control</p>
+            <p class="product-price-new">&#8358; 19,294</p>
+            <p class="product-price-old">&#8358; 21,223</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">67 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--low" style="width:30%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=solar-fan" class="flash-product">
+            <span class="discount-badge">-40%</span>
+            <div class="product-img-wrap">
+              <img src="images/solar fan.jpg">
+            </div>
+            <p class="product-name">Rechargeable Fan with Solar Panel 25W</p>
+            <p class="product-price-new">&#8358; 63,000</p>
+            <p class="product-price-old">&#8358; 104,300</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">28 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--critical" style="width:8%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=nivea-lotion" class="flash-product">
+            <span class="discount-badge">-33%</span>
+            <div class="product-img-wrap">
+              <img src="images/NIVEA1.jpg">
+            </div>
+            <p class="product-name">NIVEA Radiant &amp; Beauty Body Lotion 400ml</p>
+            <p class="product-price-new">&#8358; 7,842</p>
+            <p class="product-price-old">&#8358; 11,635</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">94 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--mid" style="width:45%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=air-fryer" class="flash-product">
+            <span class="discount-badge">-18%</span>
+            <div class="product-img-wrap">
+              <img src="images/deepfry.jpg">
+            </div>
+            <p class="product-name">SILVER CREST 8L Extra Large Digital Air Fryer</p>
+            <p class="product-price-new">&#8358; 36,000</p>
+            <p class="product-price-old">&#8358; 44,000</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">100 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--good" style="width:60%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=infinix-phone" class="flash-product">
+            <span class="discount-badge">-25%</span>
+            <div class="product-img-wrap">
+              <img src="images/phone image2.jpg">
+            </div>
+            <p class="product-name">Infinix Hot 60i 6.78" 4GB RAM 128GB Storage</p>
+            <p class="product-price-new">&#8358; 158,421</p>
+            <p class="product-price-old">&#8358; 212,442</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">38 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--low" style="width:20%"></div>
+              </div>
+            </div>
+          </a>
+          <button class="arrow-btn" aria-label="More products">&#8250;</button>
+        </div>
+      </section>
+
+      <!-- CATEGORY DEALS SECTION -->
+      <section class="category-deals-section">
+        <div class="category-deals-grid">
+          <article class="category-deal-card">
+            <div class="deal-img-wrap">
+              <div class="deal-img-circle" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb)">
+                <img src="images/infinix.png" alt="Phones">
+              </div>
+              <div class="deal-discount-tag">UP TO <strong>-25%</strong></div>
+            </div>
+            <p class="deal-cat-name">Phones &amp; Tablets</p>
+          </article>
+          <article class="category-deal-card">
+            <div class="deal-img-wrap">
+              <div class="deal-img-circle" style="background:linear-gradient(135deg,#f3e5f5,#e1bee7)">
+                <img src="images/deal img2.jpeg" alt="Phones">
+              </div>
+              <div class="deal-discount-tag">UP TO <strong>-30%</strong></div>
+            </div>
+            <p class="deal-cat-name">Appliances</p>
+          </article>
+          <article class="category-deal-card">
+            <div class="deal-img-wrap">
+              <div class="deal-img-circle" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0)">
+                <img src="images/deal img9.jpeg" alt="Phones">
+              </div>
+              <div class="deal-discount-tag">UP TO <strong>-60%</strong></div>
+            </div>
+            <p class="deal-cat-name">Beauty Must Have</p>
+          </article>
+          <article class="category-deal-card">
+            <div class="deal-img-wrap">
+              <div class="deal-img-circle" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9)">
+                <img src="images/deal img7.jpeg" alt="Phones">
+              </div>
+              <div class="deal-discount-tag">UP TO <strong>-30%</strong></div>
+            </div>
+            <p class="deal-cat-name">TV &amp; Audio</p>
+          </article>
+          <article class="category-deal-card">
+            <div class="deal-img-wrap">
+              <div class="deal-img-circle" style="background:linear-gradient(135deg,#fff8e1,#ffecb3)">
+                <img src="images/deal img6.jpeg" alt="Phones">
+              </div>
+              <div class="deal-discount-tag">UP TO <strong>-60%</strong></div>
+            </div>
+            <p class="deal-cat-name">Fashion</p>
+          </article>
+          <article class="category-deal-card">
+            <div class="deal-promo-card">
+              <div class="deal-promo-badge">BUY NOW<br />PAY SMALL<br />SMALL</div>
+              <p class="deal-promo-sub">Easy installment plans</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- TOP SELLERS SECTION -->
+      <section class="flash-sales-section">
+        <div class="flash-sales-header">
+          <div class="flash-sales-left">
+            <span class="flash-title">Top Sellers</span>
+          </div>
+          <a href="#" class="flash-see-all">See All &#8250;</a>
+        </div>
+        <div class="flash-products-track">
+          <a href="product.html?id=power-bank" class="flash-product">
+            <span class="discount-badge">-6%</span>
+            <span class="brand-badge">ACE ELEC</span>
+            <div class="product-img-wrap">
+              <img src="images/ultraslim powerbank9.jpg" alt="Ace Elec 20000mAh Ultra Slim Power Bank">
+            </div>
+            <p class="product-name">Ace Elec 20000 MAh Ultra Slim Power Bank</p>
+            <p class="product-price-new">&#8358; 6,907</p>
+            <p class="product-price-old">&#8358; 7,363</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">198 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--critical" style="width:15%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=power-bank" class="flash-product">
+            <span class="discount-badge">-9%</span>
+            <div class="product-img-wrap">
+              <img src="images/fan image.jpg">
+            </div>
+            <p class="product-name">SOLITEC STANDING FAN with Remote Control</p>
+            <p class="product-price-new">&#8358; 19,294</p>
+            <p class="product-price-old">&#8358; 21,223</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">67 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--critical" style="width:15%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=nivea-lotion" class="flash-product">
+            <span class="discount-badge">-33%</span>
+            <div class="product-img-wrap">
+              <img src="images/Nivea2.jpg">
+            </div>
+            <p class="product-name">NIVEA Radiant &amp; Beauty Body Lotion 400ml</p>
+            <p class="product-price-new">&#8358; 7,842</p>
+            <p class="product-price-old">&#8358; 11,635</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">94 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--critical" style="width:45%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=solar-fan" class="flash-product">
+            <span class="discount-badge">-40%</span>
+            <div class="product-img-wrap">
+              <img src="images/solarfan2.jpg">
+            </div>
+            <p class="product-name">Rechargeable Fan with Solar Panel 25W</p>
+            <p class="product-price-new">&#8358; 63,000</p>
+            <p class="product-price-old">&#8358; 104,300</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">28 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--critical" style="width:8%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=air-fryer" class="flash-product">
+            <span class="discount-badge">-18%</span>
+            <div class="product-img-wrap">
+              <img src="images/deepfry.jpg">
+            </div>
+            <p class="product-name">SILVER CREST 8L Extra Large Digital Air Fryer</p>
+            <p class="product-price-new">&#8358; 36,000</p>
+            <p class="product-price-old">&#8358; 44,000</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">100 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--good" style="width:60%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=infinix-phone" class="flash-product">
+            <span class="discount-badge">-25%</span>
+            <div class="product-img-wrap">
+              <img src="images/phone image2.jpg">
+            </div>
+            <p class="product-name">Infinix Hot 60i 6.78" 4GB RAM 128GB Storage</p>
+            <p class="product-price-new">&#8358; 158,421</p>
+            <p class="product-price-old">&#8358; 212,442</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">38 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--low" style="width:20%"></div>
+              </div>
+            </div>
+          </a>
+          <button class="arrow-btn" aria-label="More products">&#8250;</button>
+        </div>
+      </section>
+
+      <!-- Kids & Baby Deals SECTION -->
+      <section class="flash-sales-section">
+        <div class="flash-sales-header">
+          <div class="flash-sales-left">
+            <span class="flash-title">Kids & Baby Deals</span>
+          </div>
+          <a href="#" class="flash-see-all">See All &#8250;</a>
+        </div>
+        <div class="flash-products-track">
+          <a href="product.html?id=power-bank" class="flash-product">
+            <span class="discount-badge">-6%</span>
+            <span class="brand-badge">ACE ELEC</span>
+            <div class="product-img-wrap">
+              <img src="images/powerbank image8.jpg">
+            </div>
+            <p class="product-name">Ace Elec 20000 MAh Ultra Slim Power Bank</p>
+            <p class="product-price-new">&#8358; 6,907</p>
+            <p class="product-price-old">&#8358; 7,363</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">198 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--critical" style="width:15%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=standing-fan" class="flash-product">
+            <span class="discount-badge">-9%</span>
+            <div class="product-img-wrap">
+              <img src="images/standingfan2.jpg">
+            </div>
+            <p class="product-name">SOLITEC STANDING FAN with Remote Control</p>
+            <p class="product-price-new">&#8358; 19,294</p>
+            <p class="product-price-old">&#8358; 21,223</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">67 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--low" style="width:30%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=solar-fan" class="flash-product">
+            <span class="discount-badge">-40%</span>
+            <div class="product-img-wrap">
+              <img src="images/Rechargablefan.jpg">
+            </div>
+            <p class="product-name">Rechargeable Fan with Solar Panel 25W</p>
+            <p class="product-price-new">&#8358; 63,000</p>
+            <p class="product-price-old">&#8358; 104,300</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">28 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--critical" style="width:8%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=nivea-lotion" class="flash-product">
+            <span class="discount-badge">-33%</span>
+            <div class="product-img-wrap">
+              <img src="images/Nivea3.jpg">
+            </div>
+            <p class="product-name">NIVEA Radiant &amp; Beauty Body Lotion 400ml</p>
+            <p class="product-price-new">&#8358; 7,842</p>
+            <p class="product-price-old">&#8358; 11,635</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">94 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--mid" style="width:45%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=air-fryer" class="flash-product">
+            <span class="discount-badge">-18%</span>
+            <div class="product-img-wrap">
+              <img src="images/deepfry2.jpg">
+            </div>
+            <p class="product-name">SILVER CREST 8L Extra Large Digital Air Fryer</p>
+            <p class="product-price-new">&#8358; 36,000</p>
+            <p class="product-price-old">&#8358; 44,000</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">100 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--good" style="width:60%"></div>
+              </div>
+            </div>
+          </a>
+          <a href="product.html?id=infinix-phone" class="flash-product">
+            <span class="discount-badge">-25%</span>
+            <div class="product-img-wrap">
+              <img src="images/phone image2.jpg">
+            </div>
+            <p class="product-name">Infinix Hot 60i 6.78" 4GB RAM 128GB Storage</p>
+            <p class="product-price-new">&#8358; 158,421</p>
+            <p class="product-price-old">&#8358; 212,442</p>
+            <div class="stock-bar-wrap">
+              <p class="stock-label">38 items left</p>
+              <div class="stock-bar">
+                <div class="stock-fill stock-fill--low" style="width:20%"></div>
+              </div>
+            </div>
+          </a>
+          <button class="arrow-btn" aria-label="More products">&#8250;</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-top-inner">
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-truck-fast"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>Free Delivery</strong>
+      <span>On eligible orders</span>
+    </div>
+  </div>
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-box-open"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>Easy Returns</strong>
+      <span>15-day return policy</span>
+    </div>
+  </div>
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-shield-halved"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>Secure Payment</strong>
+      <span>100% protected</span>
+    </div>
+  </div>
+
+  <div class="footer-feature">
+    <span class="footer-feature-icon">
+      <i class="fa-solid fa-headset"></i>
+    </span>
+    <div class="footer-feature-text">
+      <strong>24/7 Support</strong>
+      <span>Dedicated support</span>
+    </div>
+  </div>
+</div>
+</div>
+    <div class="footer-main">
+      <div class="footer-col">
+        <h4 class="footer-col-title">About Jumia Nigeria</h4>
+        <nav class="footer-links">
+          <a href="#">About Jumia</a>
+          <a href="#">Jumia Business</a>
+          <a href="#">Jumia Careers</a>
+          <a href="#">Jumia Affiliates</a>
+          <a href="#">Jumia Express</a>
+          <a href="#">Jumia Pay</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Press Room</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Help &amp; Support</h4>
+        <nav class="footer-links">
+          <a href="#">Report a Product</a>
+          <a href="#">Returns &amp; Refunds</a>
+          <a href="#">Track My Order</a>
+          <a href="#">Payment Methods</a>
+          <a href="#">Delivery Information</a>
+          <a href="#">FAQ</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms &amp; Conditions</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Make Money with Jumia</h4>
+        <nav class="footer-links">
+          <a href="#">Sell on Jumia</a>
+          <a href="#">Vendor Hub</a>
+          <a href="#">Jumia Logistics</a>
+          <a href="#">Become an Agent</a>
+          <a href="#">Jumia Force</a>
+          <a href="#">Bulk Purchase</a>
+          <a href="#">Request for Products</a>
+        </nav>
+        <h4 class="footer-col-title" style="margin-top:20px;">Follow Us</h4>
+        <div class="footer-social">
+          <a href="#" class="social-btn social-fb" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-btn social-tw" aria-label="Twitter">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+          <a href="#" class="social-btn social-ig" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="#" class="social-btn social-yt" aria-label="YouTube">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+          <a href="#" class="social-btn social-li" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Jumia App</h4>
+        <p class="footer-app-subtitle">Shop on the go with the Jumia app</p>
+        <div class="footer-apps">
+          <a href="#" class="app-btn">
+            <span class="app-btn-icon">&#63743;</span>
+            <div class="app-btn-text"><small>Download on the</small><strong>App Store</strong></div>
+          </a>
+          <a href="#" class="app-btn">
+            <span class="app-btn-icon">&#9654;</span>
+            <div class="app-btn-text"><small>Get it on</small><strong>Google Play</strong></div>
+          </a>
+        </div>
+        <h4 class="footer-col-title footer-payment-title">Payment Methods</h4>
+        <div class="payment-icons">
+          <span class="pay-badge">VISA</span>
+          <span class="pay-badge">MasterCard</span>
+          <span class="pay-badge">Verve</span>
+          <span class="pay-badge">JumiaPay</span>
+          <span class="pay-badge">Bank Transfer</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <span class="footer-logo-text">JUMIA<span class="star">&#9733;</span></span>
+        <p>&copy; 2026 Jumia Nigeria. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // Slider
+    const track = document.querySelector('.hero-track');
+    const slides = document.querySelectorAll('.hero-banner');
+    const nextBtn = document.querySelector('.banner-arrow-next');
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    function moveSlide(index) {
+      track.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      moveSlide(currentIndex);
+    }
+
+    // Auto Slide every 4 seconds
+    setInterval(nextSlide, 4000);
+
+    // Manual next button
+    nextBtn.addEventListener('click', nextSlide);
+
+
+
+    // Countdown timer
+    (function () {
+      var totalSeconds = 1 * 3600 + 0 * 60 + 52;
+      var hEl = document.getElementById('timerH');
+      var mEl = document.getElementById('timerM');
+      var sEl = document.getElementById('timerS');
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function tick() {
+        if (totalSeconds <= 0) return;
+        totalSeconds--;
+        hEl.textContent = pad(Math.floor(totalSeconds / 3600));
+        mEl.textContent = pad(Math.floor((totalSeconds % 3600) / 60));
+        sEl.textContent = pad(totalSeconds % 60);
+      }
+      setInterval(tick, 1000);
+    })();
+
+    // Scroll to top
+    var scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', function () {
+      scrollBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+    scrollBtn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Auth modal
+    var modal = document.getElementById('authModal');
+    var modalClose = document.getElementById('modalClose');
+
+    function openModal(tab) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('successMsg').style.display = 'none';
+      document.querySelectorAll('.modal-form').forEach(function (f) { f.classList.remove('active'); });
+      document.getElementById((tab === 'signup' ? 'signup' : 'login') + 'Form').classList.add('active');
+      document.querySelectorAll('.modal-tab').forEach(function (t) { t.classList.remove('active'); });
+      document.querySelector('[data-tab="' + (tab || 'login') + '"]').classList.add('active');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.modal-tab').forEach(function (t) { t.classList.remove('active'); });
+      document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
+      document.querySelectorAll('.modal-form').forEach(function (f) { f.classList.remove('active'); });
+      document.getElementById(tab + 'Form').classList.add('active');
+      document.getElementById('successMsg').style.display = 'none';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+    document.querySelectorAll('.modal-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () { switchTab(tab.dataset.tab); });
+    });
+
+    // Password toggle
+    document.querySelectorAll('.pw-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var inp = document.getElementById(btn.dataset.target);
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+        btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+      });
+    });
+
+    // Form validation helpers
+    function showError(id, show) {
+      var el = document.getElementById(id);
+      if (el) el.classList.toggle('show', show);
+    }
+    function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+    function validatePhone(v) { return /^[\+\d\s\-\(\)]{7,15}$/.test(v); }
+
+    // Login submit
+    document.getElementById('loginSubmit').addEventListener('click', function () {
+      var email = document.getElementById('loginEmail').value.trim();
+      var pw = document.getElementById('loginPw').value;
+      var valid = true;
+      var emailOk = validateEmail(email);
+      showError('loginEmailError', !emailOk);
+      document.getElementById('loginEmail').classList.toggle('error', !emailOk);
+      if (emailOk) document.getElementById('loginEmail').classList.add('success-input');
+      if (!emailOk) valid = false;
+      var pwOk = pw.length > 0;
+      showError('loginPwError', !pwOk);
+      document.getElementById('loginPw').classList.toggle('error', !pwOk);
+      if (!pwOk) valid = false;
+      if (valid) {
+        document.getElementById('loginForm').classList.remove('active');
+        document.getElementById('successTitle').textContent = 'Welcome back!';
+        document.getElementById('successText').textContent = 'You have signed in successfully. Happy shopping!';
+        var sm = document.getElementById('successMsg');
+        sm.style.display = 'flex';
+        sm.style.flexDirection = 'column';
+      }
+    });
+
+    // Signup submit
+    document.getElementById('signupSubmit').addEventListener('click', function () {
+      var first = document.getElementById('signupFirst').value.trim();
+      var last  = document.getElementById('signupLast').value.trim();
+      var email = document.getElementById('signupEmail').value.trim();
+      var phone = document.getElementById('signupPhone').value.trim();
+      var pw    = document.getElementById('signupPw').value;
+      var pwC   = document.getElementById('signupPwConfirm').value;
+      var valid = true;
+      var checks = [
+        { val: !first,                         errId: 'signupFirstError',     inpId: 'signupFirst' },
+        { val: !last,                           errId: 'signupLastError',      inpId: 'signupLast' },
+        { val: !validateEmail(email),           errId: 'signupEmailError',     inpId: 'signupEmail' },
+        { val: phone && !validatePhone(phone),  errId: 'signupPhoneError',     inpId: 'signupPhone' },
+        { val: pw.length < 8,                   errId: 'signupPwError',        inpId: 'signupPw' },
+        { val: pw !== pwC,                      errId: 'signupPwConfirmError', inpId: 'signupPwConfirm' }
+      ];
+      checks.forEach(function (c) {
+        showError(c.errId, c.val);
+        document.getElementById(c.inpId).classList.toggle('error', c.val);
+        if (c.val) valid = false;
+      });
+      if (valid) {
+        document.getElementById('signupForm').classList.remove('active');
+        document.getElementById('successTitle').textContent = 'Account Created! 🎉';
+        document.getElementById('successText').textContent = 'Welcome to Jumia, ' + first + '! Start exploring amazing deals.';
+        var sm = document.getElementById('successMsg');
+        sm.style.display = 'flex';
+        sm.style.flexDirection = 'column';
+      }
+    });
+
+    // Clear error on input
+    document.querySelectorAll('.form-input').forEach(function (inp) {
+      inp.addEventListener('input', function () { inp.classList.remove('error'); });
+    });
+
+    /* ==============================
+       CART COUNT BADGE
+    ============================== */
+    (function(){
+      try{
+        var cart=JSON.parse(localStorage.getItem('jumia_cart')||'[]');
+        var total=cart.reduce(function(s,i){return s+i.qty;},0);
+        var el=document.getElementById('cartCount');
+        if(el) el.textContent=total;
+      }catch(e){}
+    })();
+  </script>
+
+</body>
+</html>
